@@ -115,7 +115,6 @@
         "turndown": "^7.1.1",
         "turndown-plugin-gfm": "^1.0.2",
         "vitest": "^0.9.3",
-        "vue-jest": "^3.0.7",
         "vue-router": "^3"
     },
     "engines": {
