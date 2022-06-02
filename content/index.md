@@ -1,9 +1,5 @@
----
-title: Introduction
-date: 2022-03-28T14:21:10.665Z
-description: Learn how to use @nuxt/content.
----
+# Hello Nuxt Content
 
-## Welcome
+Welcome to Nuxt Content Hello World example.
 
-You can edit me in <code>content/index.md</code>.
+Checkout the [about page](/about).

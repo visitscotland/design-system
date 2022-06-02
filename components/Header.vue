@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="header">
         <div class="logo-wrapper">
             <a href="/">
                 <img
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    name: 'DSHeader',
+    name: 'Header',
     status: 'prototype',
 };
 </script>

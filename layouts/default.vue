@@ -1,25 +1,55 @@
 <template>
-<div>
-  HEllo
-    <DSHeader/>
-    <DSSidebar :links=sections />
-      <Nuxt />
+<div class="container">
+    <Header />
+    <div class="flex-grid">
+        <Sidebar :links=sections />
+          <Nuxt />
+    </div>
 </div>
 </template>
+<script>
+import Header from '../components/Header.vue';
+import Sidebar from '../components/Sidebar.vue';
+
+export default {
+  components: {
+    Header,
+    Sidebar
+  },
+  data() {
+    return {
+      sections: []
+    }
+  },
+};
+</script>
 <style lang="scss">
 
 body {
     font-family: "Source Sans Pro",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #191919;
+    text-align: left;
     margin:0;
     padding:0;
 }
 .container {
-  display: flex;
-  flex-direction: row;
+    margin:0;
+}
+
+.flex-grid {
+    display: flex;
+    margin: auto -1rem -1rem;
 }
 
 .content {
-  display: flex;
+  flex:3;
+}
+
+.header {
+  flex: 3;
 }
 
 ul {
@@ -32,28 +62,15 @@ a {
 
 h1, h2 {
   font-weight: 400;
+    color: #700e57;
+    letter-spacing: -1px;
   margin: 0;
   padding: 0;
   text-transform: uppercase;
-  font-family: "evelethclean-regular", Helvetica, Arial, sans-serif
+  font-family: "evelethclean-regular",sans-serif,Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+h1 {
+    font-size: 3.6rem;
 }
 </style>
-<script>
-export default {
-  async asyncData({ $content, params }) {
-    const sections = await $content({deep: true})
-      .only(['title', 'description', 'img', 'slug', 'author'])
-      .sortBy('createdAt', 'desc')
-      .fetch()
-
-    return {
-      sections
-    }
-  },
-  data() {
-    return {
-      sections: []
-    }
-  },
-};
-</script>
