@@ -1,7 +1,4 @@
----
-title: Contact Us
-date: 2022-03-28T15:00:39.502Z
-description: startrtert
-tags: getting-started
----
-Work in Progress
+# Contact Us
+
+* Owners of the Design System, contact details
+* How to give feedback

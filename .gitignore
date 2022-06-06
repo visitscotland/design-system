@@ -28,3 +28,5 @@ src/assets/tokens/
 
 build/
 
+.nuxt-storybook
+storybook-static

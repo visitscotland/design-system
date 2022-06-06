@@ -1,7 +1,5 @@
----
-title: Designing
-date: 2022-03-28T15:00:39.502Z
-description: startrtert
-tags: getting-started
----
-Work in Progress
+# Designing
+	•	Introduction to designing for .com
+	•	User research - approach
+	•	Links to download prototyping design files for .com
+	•	Link to Brand Portal for more info

@@ -3,7 +3,9 @@
     <Header />
     <div class="flex-grid">
         <Sidebar :links=sections />
-          <Nuxt />
+          <div class="content">
+            <NuxtChild />
+          </div>
     </div>
 </div>
 </template>

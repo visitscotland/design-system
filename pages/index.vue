@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div>
         <h1>VisitScotland Design System</h1>
         <p>
             This design system serves as a set of organized tools, patterns & practices that work as the foundation for visitscotland.com.
@@ -9,23 +9,3 @@
         </p>
     </div>
 </template>
-
-<!-- <script>
-export default {
-    head() {
-        return {
-            script: [
-                {
-                    src: 'https://identity.netlify.com/v1/netlify-identity-widget.js',
-                },
-            ],
-            link: [
-                {
-                    rel: 'stylesheet',
-                    href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700',
-                },
-            ],
-        };
-    },
-};
-</script> -->

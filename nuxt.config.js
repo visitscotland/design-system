@@ -1,16 +1,7 @@
 import { defineNuxtConfig } from '@nuxt/bridge'
 
 export default defineNuxtConfig({
-    // modules: ['@nuxt/content'],
-    modules: [
-        '@nuxtjs/strapi'
-    ],
-    strapi: {
-        url: process.env.STRAPI_URL || 'http://localhost:1337',
-        prefix: '/api',
-        version: 'v4',
-        cookie: {},
-    },
+    modules: ['@nuxtjs/markdownit', '@nuxt/postcss8'],
     // [optional] markdownit options
     // See https://github.com/markdown-it/markdown-it
     markdownit: {

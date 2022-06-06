@@ -1,25 +1,15 @@
-<template lang="md">
-# Hello World!
-
-Current route is: {{ $route.path }}
+<template>
+  <div v-html="index"></div>
 </template>
 
-<!-- <script>
-export default {
-    head() {
-        return {
-            script: [
-                {
-                    src: 'https://identity.netlify.com/v1/netlify-identity-widget.js',
-                },
-            ],
-            link: [
-                {
-                    rel: 'stylesheet',
-                    href: 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700',
-                },
-            ],
-        };
-    },
-};
-</script> -->
+<script>
+  import index from './index.md'
+
+  export default {
+    computed: {
+      index() {
+        return index
+      }
+    }
+  }
+</script>
