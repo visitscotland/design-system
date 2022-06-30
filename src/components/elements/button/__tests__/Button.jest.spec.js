@@ -131,26 +131,6 @@ describe('VsButton', () => {
 
                 expect(iconStub.attributes('orientation')).toBe('down');
             });
-
-            it('should set an `mr-2` class if `iconOnly` is not truthy', () => {
-                const wrapper = factoryShallowMount({
-                    icon: testIcon,
-                    iconOnly: false,
-                });
-                const iconStub = wrapper.find('vsicon-stub');
-
-                expect(iconStub.classes('mr-2')).toBe(true);
-            });
-
-            it('should *NOT* set an `mr-2` class if `iconOnly` is truthy', () => {
-                const wrapper = factoryShallowMount({
-                    icon: testIcon,
-                    iconOnly: true,
-                });
-                const iconStub = wrapper.find('vsicon-stub');
-
-                expect(iconStub.classes('mr-2')).toBe(false);
-            });
         });
 
         describe(':animate', () => {
@@ -201,6 +181,15 @@ describe('VsButton', () => {
                 wrapper.trigger('click');
                 expect(wrapper.classes('vs-button--is-animating')).toBe(false);
             });
+        });
+    });
+
+    describe(':methods', () => {
+        it('should emit `btnFocus` when `tabbedIn` method is called', () => {
+            const wrapper = factoryShallowMount();
+
+            wrapper.vm.tabbedIn();
+            expect(wrapper.emitted().btnFocus).toBeTruthy();
         });
     });
 

@@ -6,6 +6,7 @@
         <div class="vs-video__iframe-wrapper">
             <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
             <youtube
+                v-if="!cookiesMissing"
                 :video-id="videoId"
                 :player-vars="playerVars"
                 ref="youtube"
@@ -44,13 +45,8 @@ Vue.use(VueYoutube, {
 });
 
 /**
- * This component embeds a YouTube video on to the page.
- *
- * It also uses the YouTube Player API so it can be controlled by
- * other components. It listens for a 'video-controls' event which
- * can be used to play or pause the video.
- *
- * It also calculates duration of a video for use in components.
+ * Videos allow a user to engage with our
+ * products and discover new information.
  *
  * @displayName Video
  */
@@ -115,6 +111,13 @@ export default {
          */
         player() {
             return this.$refs.youtube.player;
+        },
+        // Checks whether appropriate cookies have been rejected for the video, and prevents
+        // initialisation if so
+        cookiesMissing() {
+            // TODO: Add cookie functionality once checker integrated
+            // See VS-3606
+            return false;
         },
     },
     mounted() {
@@ -215,63 +218,9 @@ export default {
                 id: this.videoId,
                 durationMsg: this.duration.roundedMinutes,
                 duration: (this.duration.minutes * 60) + this.duration.seconds,
+                fullDuration: this.duration,
             });
         },
     },
 };
 </script>
-
-<docs>
-  ```jsx
-    <VsContainer>
-        <VsRow>
-            <VsCol md="6">
-                <VsVideo
-                    video-id="c05sg3G4oA4"
-                    language="es-es"
-                />
-            </VsCol>
-            <VsCol md="6">
-                <VsVideo
-                    video-id="dKI8IEnqvbU"
-                    single-minute-descriptor="Video de %s minuto"
-                    plural-minute-descriptor="Video de %s minutos"
-                    language="nl-nl"
-                />
-            </VsCol>
-        </VsRow>
-        <VsRow>
-            <VsCol md="6">
-                <VsButton
-                    @click.native="$root.$emit('video-controls', 'play', 'c05sg3G4oA4')"
-                    @keydown="$root.$emit('video-controls', 'play', 'c05sg3G4oA4')"
-                >
-                    Play
-                </VsButton>
-                <VsButton
-                    @click.native="$root.$emit('video-controls', 'pause', 'c05sg3G4oA4')"
-                    @keydown="$root.$emit('video-controls', 'pause', 'c05sg3G4oA4')"
-                >
-                    Pause
-                </VsButton>
-            </VsCol>
-            <VsCol md="6">
-                <VsButton
-                    @click.native="$root.$emit('video-controls', 'play', 'dKI8IEnqvbU')"
-                    @keydown="$root.$emit('video-controls', 'play', 'dKI8IEnqvbU')"
-                >
-                    Play
-                </VsButton>
-
-                <VsButton
-
-                    @click.native="$root.$emit('video-controls', 'pause', 'dKI8IEnqvbU')"
-                    @keydown="$root.$emit('video-controls', 'pause', 'dKI8IEnqvbU')"
-                >
-                    Pause
-                </VsButton>
-            </VsCol>
-        </VsRow>
-    </VsContainer>
-  ```
-</docs>

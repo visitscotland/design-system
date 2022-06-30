@@ -5,7 +5,11 @@
         :alt="alt"
         :fluid="fluid"
         :fluid-grow="fluidGrow"
+        loading="lazy"
+        :style="imgStyle"
+        class="low-res-img"
     >
+        <!-- @slot Default slot for image content -->
         <slot />
     </BImg>
 </template>
@@ -13,9 +17,8 @@
 <script>
 import { BImg } from 'bootstrap-vue';
 /**
- * This image component is used to render images in the site. It utilises
- * <a href="https://bootstrap-vue.js.org/docs/components/image">the Bootstrap
- * Vue b-img component</a>.
+ * This image component is used to render images in our products
+ * to help support and clarify content.
  *
  * @displayName Img
  */
@@ -34,6 +37,14 @@ export default {
         src: {
             type: String,
             required: true,
+        },
+
+        /**
+         * Provide low res image to be initially loaded
+         */
+        lowResImage: {
+            type: String,
+            default: null,
         },
 
         /**
@@ -60,44 +71,24 @@ export default {
             type: Boolean,
         },
     },
+    computed: {
+        imgStyle() {
+            if (this.lowResImage) {
+                return {
+                    backgroundImage: `url(${this.lowResImage})`,
+                };
+            }
+
+            return null;
+        },
+    },
 };
 </script>
 
-<docs>
-  ```jsx
-
-  <div>
-    <VsContainer>
-      <VsRow>
-        <VsCol>
-          <VsImg
-            src="https://cimg.visitscotland.com/cms-images/attractions/outlander/claire-standing-stones-craigh-na-dun-outlander?size=sm"
-            alt="Claire standing stones"
-          />
-        </VsCol>
-      </VsRow>
-      <VsRow class="mt-5">
-        <VsCol>
-          <VsImg
-            src="https://cimg.visitscotland.com/cms-images/attractions/outlander/claire-standing-stones-craigh-na-dun-outlander?size=sm"
-            alt="Claire standing stones"
-            fluid
-          />
-        </VsCol>
-      </VsRow>
-      <VsRow class="mt-5">
-        <VsCol>
-          <VsImg
-            src="https://cimg.visitscotland.com/cms-images/attractions/outlander/claire-standing-stones-craigh-na-dun-outlander?size=sm"
-            alt="Claire standing stones"
-            fluid-grow
-          />
-        </VsCol>
-      </VsRow>
-    </VsContainer>
-    <br />
-
-  </div>
-
-  ```
-</docs>
+<style lang="scss">
+    .low-res-img {
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: block;
+    }
+</style>

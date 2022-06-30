@@ -32,8 +32,8 @@ module.exports = {
      * We’re defining below JS and SCSS required globally.
      */
     require: [
-        path.join(__dirname, '../docs/docs.helper.js'),
         path.join(__dirname, '../docs/styles/docs.styles.scss'),
+        path.join(__dirname, '../docs/docs.helper.js'),
         path.join(__dirname, '../src/assets/fixtures/index.js'),
         path.join(__dirname, '../src/styles/core.styles.scss'),
     ],

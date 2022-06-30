@@ -96,7 +96,7 @@ export default {
 
         .card-title {
             margin-top: $spacer-0;
-            font-size: $font-size-sm;
+            font-size: $font-size-2;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -111,7 +111,7 @@ export default {
         }
 
         .vs-stretched-link-card__link {
-            font-size: $small-font-size;
+            font-size: $font-size-3;
         }
 
         @include media-breakpoint-up(sm) {
@@ -119,7 +119,7 @@ export default {
             flex-direction: row-reverse;
 
             .card-title {
-                font-size: $font-size-base;
+                font-size: $font-size-4;
             }
 
             .card-body {
@@ -138,7 +138,7 @@ export default {
                 }
             }
 
-            .vs-stretched-link-card__img {
+            .vs-stretched-link-card__img-container {
                 width: 245px;
                 height: auto;
             }
@@ -153,19 +153,19 @@ export default {
                 padding: $spacer-5 $spacer-3;
             }
 
-            .vs-stretched-link-card__img {
+            .vs-stretched-link-card__img-container {
                 width: 100%;
             }
 
             .card-title {
-                font-size: $font-size-sm;
+                font-size: $font-size-2;
             }
 
             .vs-stretched-link-card__content {
                 display: -webkit-box;
                 margin: $spacer-0;
                 color: $color-base-text;
-                font-size: $small-font-size;
+                font-size: $font-size-3;
             }
 
             .vs-stretched-link-card__link {
@@ -178,7 +178,7 @@ export default {
     @include no-js {
         @include media-breakpoint-down(md) {
             .card.vs-mega-nav-featured-item {
-                .vs-stretched-link-card__img {
+                .vs-stretched-link-card__img-container {
                     width: 100%;
                 }
 
@@ -192,7 +192,7 @@ export default {
                 }
 
                 .card-title {
-                    font-size: $font-size-sm;
+                    font-size: $font-size-2;
                     margin-bottom: 0;
                 }
             }

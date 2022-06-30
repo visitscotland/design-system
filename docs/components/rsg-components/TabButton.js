@@ -33,6 +33,7 @@ export const styles = ({ space, color, fontFamily, fontSize, buttonTextTransform
 		borderBottom: [[2, color.linkHover, 'solid']],
 	},
 });
+
 export const TabButtonRenderer = ({
 	classes,
 	name,
@@ -44,7 +45,9 @@ export const TabButtonRenderer = ({
 	const classNames = cx(classes.button, className, {
 		[classes.isActive]: active,
 	});
+
     var disabled = (name === 'rsg-usage') ? true : false;
+
 	return (
 		<button
 			type="button"
@@ -58,6 +61,7 @@ export const TabButtonRenderer = ({
 		</button>
 	);
 };
+
 TabButtonRenderer.propTypes = {
 	classes: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
 	name: PropTypes.string.isRequired,
@@ -69,4 +73,5 @@ TabButtonRenderer.propTypes = {
 TabButtonRenderer.defaultProps = {
 	active: false,
 };
+
 export default Styled(styles)(TabButtonRenderer);

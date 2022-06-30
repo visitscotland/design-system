@@ -1,31 +1,30 @@
 <template>
-    <i
+    <VsSvg
+        :path="path"
         :class="{
-            'fak': true,
-            [`fa-${icon}`]:true,
             'vs-icon': true,
             [`vs-icon--size-${size}`]: true,
             [`vs-icon--sm-size-${smallSize}`]: smallSize,
             [`vs-icon--${formattedName}`]: true,
-            ['icon--' + orientation]: orientation,
             [`vs-icon--variant-${variant}`]: variant,
+            ['icon--' + orientation]: orientation,
         }"
-        :style="[customColour ? {color: customColour} : {}]"
+        :style="[customColour ? {fill: customColour} : {}]"
         v-bind="$attrs"
         data-test="vs-icon"
     />
 </template>
+
 <script>
 import { get } from 'lodash';
 import designTokens from '@/assets/tokens/tokens.raw.json';
+import VsSvg from '@components/elements/svg';
+
+const iconPath = 'icons/';
 
 /**
- * Icons are used to visually communicate core parts of the product and
- * available actions. They can act as wayfinding tools to help users more
- * easily understand where they are in the product.
- *
- * Our icons come in specific sizes - xxs, xs, sm, md, lg and xl - and can be any colour,
- * including any of the theme colours.
+ * Icons are used to visually communicate available actions
+ * or ideas and can help users navigate the product.
  *
  * @displayName Icon
  */
@@ -33,6 +32,9 @@ export default {
     name: 'VsIcon',
     status: 'prototype',
     release: '0.1.0',
+    components: {
+        VsSvg,
+    },
     props: {
         /**
          * The name of the icon to display, which will be the name of the icon file
@@ -44,14 +46,13 @@ export default {
         },
         /**
          * The fill color of the SVG icon.
-         * `primary, secondary, light, dark,
-         * reverse-white, secondary-teal`
+         * `primary|secondary|light|dark|color-white|secondary-teal`
          */
         variant: {
             type: String,
             default: null,
             validator: (value) => value.match(
-                /(primary|secondary|light|dark|reverse-white|secondary-teal)/,
+                /(primary|secondary|light|dark|color-white|secondary-teal)/,
             ),
         },
         /**
@@ -65,8 +66,8 @@ export default {
             default: null,
         },
         /**
-        * The orientation of the icon. Defaults to 'up'.
-        * `up, left, right, down`
+        * The orientation of the icon
+        * `up|down|left|right`
         */
         orientation: {
             type: String,
@@ -76,8 +77,8 @@ export default {
             ),
         },
         /**
-        * Size of icon, defaults to medium
-        * `xxs, xs, sm, md, lg, xl`)
+        * Size of icon
+        * `xxs|xs|sm|md|lg|xl`
         */
         size: {
             type: String,
@@ -85,9 +86,8 @@ export default {
             validator: (value) => value.match(/(xxs|xs|sm|md|lg|xl)/),
         },
         /**
-        * Size of icon at small and extra small viewport, defaults to null,
-        * the size falls back to the regular size if not set
-        * `xxs, xs, sm, md, lg, xl`)
+        * Changes the size of the icon at sm and xs viewports
+        * `xxs|xs|sm|md|lg|xl`
         */
         smallSize: {
             type: String,
@@ -97,10 +97,6 @@ export default {
     },
     data() {
         return {
-            /*
-                *  Some DMS feed categories are different
-                    from the name of the icon file.  This lookup marries up discrepencies
-                */
             iconLookup: [
                 {
                     key: 'accesstoliet',
@@ -203,10 +199,6 @@ export default {
                     value: 'walk',
                 },
                 {
-                    key: 'boat',
-                    value: 'boat',
-                },
-                {
                     key: 'transport',
                     value: 'transport',
                 },
@@ -218,8 +210,8 @@ export default {
         };
     },
     computed: {
-        icon() {
-            return this.formattedName;
+        path() {
+            return iconPath + this.formattedName;
         },
         dimension() {
             return get(designTokens, `props.icon_size_${this.size}.value`, '40px');
@@ -233,24 +225,6 @@ export default {
             const formattedNameLookup = this.iconLookup.find(({ key }) => key === this.name);
 
             return formattedNameLookup !== undefined ? formattedNameLookup.value : this.name;
-        },
-    },
-    mounted() {
-        this.loadFontAwesomeScript();
-    },
-    methods: {
-        loadFontAwesomeScript() {
-            /*
-            * To use the font awesome icons correctly we need to inject the Font Kit for .com
-            */
-            if (!window.fontAwesomeRequested) {
-                window.fontAwesomeRequested = true;
-                const script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.src = `https://kit.fontawesome.com/${process.env.ICON_KIT_TOKEN}.js`;
-                script.crossOrigin = 'anonymous';
-                document.head.appendChild(script);
-            }
         },
     },
 };
@@ -272,7 +246,7 @@ $variants: (
     secondary: $color-theme-secondary,
     light: $color-theme-light,
     dark: $color-theme-dark,
-    reverse-white: $color-white,
+    color-white: $color-white,
     secondary-teal: $color-theme-secondary-teal,
 );
 
@@ -291,8 +265,8 @@ $variants: (
         }
     }
 
-    // This is awkward but these have to be two separate loops through
-    // the sizes. If you have one loop generating both sets you run into
+    // We need two separate loops through the sizes.
+    // If you have one loop generating both sets you run into
     // specificity issues as the classes go sm-xs xs sm-sm sm etc etc,
     // and the later non-sm classes override the earlier sm ones
     @each $size in map-keys($sizes) {
@@ -310,10 +284,10 @@ $variants: (
 
     @each $variant in map-keys($variants) {
         &.vs-icon--variant-#{$variant} {
-            color: map-get($variants, $variant);
+            fill: map-get($variants, $variant);
 
              &.icon--reverse {
-                color: $color-white;
+                fill: $color-white;
                 background: map-get($variants, $variant);
             }
         }
@@ -332,79 +306,3 @@ $variants: (
     }
 }
 </style>
-
-<docs>
-```jsx
-  <div>
-
-    <h3>Default</h3>
-    <VsIcon name="search" />
-
-    <h3 class="mt-8">Variant</h3>
-    <VsIcon name="boat" variant="primary" />
-    <VsIcon name="user" variant="secondary" />
-    <VsIcon name="user" variant="light" />
-    <VsIcon name="user" variant="dark" />
-    <VsIcon name="user" variant="reverse-white" />
-    <VsIcon name="user" variant="secondary-teal" />
-
-    <h3 class="mt-8">Custom Colour</h3>
-    <VsIcon name="user" customColour="#ff0000" />
-    <VsIcon name="user" customColour="gold" />
-
-    <h3 class="mt-8">Size</h3>
-
-    <div class="d-flex">
-        <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>xxs</h4>
-            <VsIcon name="boat" size="xxs" />
-            </div>
-
-            <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>xs</h4>
-            <VsIcon name="favourite" size="xs" />
-            </div>
-
-            <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>sm</h4>
-            <VsIcon name="favourite" size="sm" />
-            </div>
-
-            <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>md</h4>
-            <VsIcon name="favourite" size="md" />
-            </div>
-
-            <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>lg</h4>
-            <VsIcon name="favourite" size="lg" />
-            </div>
-
-            <div class="d-flex flex-column mr-3 align-items-center">
-            <h4>xl</h4>
-            <VsIcon name="favourite" size="xl" />
-            </div>
-        </div>
-
-        <h3 class="mt-8">Orientation</h3>
-        <div class="d-flex">
-            <div class="d-flex flex-column mr-3 align-items-center">
-                <h4>Up</h4>
-                <VsIcon name="chevron" orientation="up" />
-            </div>
-            <div class="d-flex flex-column mr-3 align-items-center">
-                <h4>Down</h4>
-                <VsIcon name="chevron" orientation="down" />
-            </div>
-            <div class="d-flex flex-column mr-3 align-items-center">
-                <h4>Left</h4>
-                <VsIcon name="chevron" orientation="left" />
-            </div>
-            <div class="d-flex flex-column mr-3 align-items-center">
-                <h4>Right</h4>
-                <VsIcon name="chevron" orientation="right" />
-            </div>
-        </div>
-    </div>
-```
-</docs>

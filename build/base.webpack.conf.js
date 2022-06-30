@@ -1,8 +1,8 @@
 const path = require('path');
 
-const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
+
 const buildMode = require('./base.build-mode');
 
 function resolve(dir) {
@@ -77,29 +77,6 @@ module.exports = {
                 },
             },
             {
-                test: /\.svg$/,
-                use: [
-                    'html-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            svgo: {
-                                plugins: [
-                                    {
-                                        removeViewBox: false,
-                                    },
-                                    {
-                                        inlineStyles: {
-                                            onlyMatchedOnce: false,
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                    },
-                ],
-            },
-            {
                 test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
                 loader: 'file-loader',
                 options: {
@@ -113,6 +90,40 @@ module.exports = {
                     name: 'fonts/[name].[ext]',
                 },
             },
+            {
+                test: /\.svg$/,
+                oneOf: [
+                    {
+                        resourceQuery: /optimise/,
+                        use: [
+                            'html-loader',
+                            {
+                                loader: 'image-webpack-loader',
+                                options: {
+                                    svgo: {
+                                        plugins: [
+                                            {
+                                                removeViewBox: false,
+                                            },
+                                            {
+                                                inlineStyles: {
+                                                    onlyMatchedOnce: false,
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        options: {
+                            name: 'img/[name].[hash:7].[ext]',
+                        },
+                        loader: 'file-loader',
+                    },
+                ],
+            },
         ],
     },
     performance: {
@@ -125,7 +136,6 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin('style.css'),
-        new Dotenv(),
     ],
     node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
